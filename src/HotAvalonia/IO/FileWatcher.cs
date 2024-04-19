@@ -189,11 +189,11 @@ internal sealed class FileWatcher : IDisposable
                 return;
             }
 
-            if (IsDuplicateEvent(args))
-                return;
-
-            _eventCache.Add(args);
-            sync?.Invoke();
+            if (!IsDuplicateEvent(args))
+            {
+                _eventCache.Add(args);
+                sync?.Invoke();
+            }
         }
 
         if (!TryProcessComplexEvent(args))
